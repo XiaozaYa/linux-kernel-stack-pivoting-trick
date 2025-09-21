@@ -1,5 +1,5 @@
 # linux-kernel-stack-pivoting-trick
-some tricks for Linux kernel stack pivoting in CTF \[with smap|smep|kaslr\]
+some tricks for linux kernel stack pivoting in CTF \[with smap|smep|kaslr\]
 
 ## direct mapping area [physmap]
 - condition: leak physmap address
