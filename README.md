@@ -37,7 +37,7 @@ int main(int argc, char** argv, char** envp)
 ```
 
 ## DB_stack [in per-cpu cpu_entry_area]
-- condition: leak per-cpu cpu_entry_area
+- condition: leak per-cpu cpu_entry_area after linux 6.2
 - exploit: trigger hardware breakpoint to place rop chain in DB_stack
 ```c
 #ifndef _GNU_SOURCE
