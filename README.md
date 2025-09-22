@@ -35,6 +35,7 @@ int main(int argc, char** argv, char** envp)
         return 0;
 }
 ```
+- example: [MINI-LCTF2022 kgadget](https://arttnba3.cn/2021/03/03/PWN-0X00-LINUX-KERNEL-PWN-PART-I/#0x03-Kernel-ROP-ret2dir) with smap&&smep, but no kaslr
 
 ## DB_stack [in per-cpu cpu_entry_area]
 - condition: leak per-cpu cpu_entry_area after linux 6.2
@@ -128,6 +129,7 @@ int main(int argc, char **argv, char **env)
     return 0;
 }
 ```
+- example: [SCTF2023 sycrop|moonpray](https://github.com/pray77/CVE-2023-3640)
 
 ## a area after kernel data
 - condition: leak kbase
@@ -163,3 +165,4 @@ int main(int argc, char** argv, char** envp)
         return 0;
 }
 ```
+- example: [WMCTF2025 wm_easyker](https://blog.xmcve.com/2025/09/22/WMCTF2025-Writeup/#title-5)
