@@ -35,7 +35,7 @@ int main(int argc, char** argv, char** envp)
         return 0;
 }
 ```
-- example: [MINI-LCTF2022 kgadget](https://arttnba3.cn/2021/03/03/PWN-0X00-LINUX-KERNEL-PWN-PART-I/#0x03-Kernel-ROP-ret2dir) with smap&&smep, but no kaslr
+- example: [MINI-LCTF2022 kgadget](https://arttnba3.cn/2021/03/03/PWN-0X00-LINUX-KERNEL-PWN-PART-I/#0x03-Kernel-ROP-ret2dir) by [@arttnba3](https://arttnba3.cn/about/) [with smap&&smep, but no kaslr]
 
 ## DB_stack [in per-cpu cpu_entry_area]
 - condition: leak per-cpu cpu_entry_area after linux 6.2
@@ -130,9 +130,26 @@ int main(int argc, char **argv, char **env)
 }
 ```
 - example: [SCTF2023 sycrop|moonpray](https://github.com/pray77/CVE-2023-3640)
-- bypass cea randomization in qemu [maybe just in CTF]:
-  - [make cpu-entry-area great again](https://kqx.io/post/sp0/) raised by [@kqx](https://kqx.io/about/)
+- bypass cea randomization \[in qemu\] [maybe just in CTF]:
+  - [make cpu-entry-area great again](https://kqx.io/post/sp0/) - the trick raised by [@kqx](https://kqx.io/about/)
   - I know the trick in [wm_easyker && wm_easynetlink writeup](https://cnitlrt.github.io/wmctf2025/#wm_easyker) by [@cnitlrt](https://cnitlrt.github.io/about/)
+  - same respect to [@TlmeT0B4d](https://github.com/TlmeT0B4d)
+```c
+#include <stdio.h>
+#include <stdint.h>
+#include <string.h>
+
+int main() {
+        unsigned char gdtr[0x100] = {0};
+        asm volatile ("sgdt %0" : "=m"(gdtr) );
+        uint16_t limit = *(uint16_t*)(gdtr + 0);
+        uint64_t base = 0;
+        memcpy(&base, gdtr + 2, 8);
+        printf("GDTR.limit = 0x%04x\n", limit);
+        printf("GDTR.base  = 0x%016llx\n", (unsigned long long)base);
+        return 0;
+}
+```
 
 ## a area after kernel data [maybe just in CTF]
 - condition: leak kbase
@@ -168,4 +185,10 @@ int main(int argc, char** argv, char** envp)
         return 0;
 }
 ```
-- example: [WMCTF2025 wm_easyker](https://blog.xmcve.com/2025/09/22/WMCTF2025-Writeup/#title-5)
+- example: [WMCTF2025 wm_easyker](https://blog.xmcve.com/2025/09/22/WMCTF2025-Writeup/#title-5) by [@Polaris](https://www.xmcve.com/)
+
+## &input_pool.hash.buf
+- condition: leak kbase
+- example:
+  - https://github.com/google/security-research/blob/b8be9f3f78a45abf1da31795d66b38cb7ede79e2/pocs/linux/kernelctf/CVE-2025-21703_lts_2/docs/novel-techniques.md - the trick raised by [@u1f383](https://github.com/u1f383)
+  - I know the trick in [wm_easyker && wm_easynetlink writeup](https://cnitlrt.github.io/wmctf2025/#wm_easyker) by [@cnitlrt](https://cnitlrt.github.io/about/)
