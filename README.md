@@ -130,8 +130,11 @@ int main(int argc, char **argv, char **env)
 }
 ```
 - example: [SCTF2023 sycrop|moonpray](https://github.com/pray77/CVE-2023-3640)
+- bypass cea randomization in qemu [maybe just in CTF]:
+-  [make cpu-entry-area great again](https://kqx.io/post/sp0/) by [@kqx](https://kqx.io/about/)
+-  I know the trick in [wm_easyker && wm_easynetlink writeup](https://cnitlrt.github.io/wmctf2025/#wm_easyker) by [@cnitlrt](https://cnitlrt.github.io/about/)
 
-## a area after kernel data
+## a area after kernel data [maybe just in CTF]
 - condition: leak kbase
 - exploit: mmap\[or other ways\] to spray rop chain
 ```c
