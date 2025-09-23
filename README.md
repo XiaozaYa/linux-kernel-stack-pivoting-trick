@@ -129,7 +129,7 @@ int main(int argc, char **argv, char **env)
     return 0;
 }
 ```
-- example: [SCTF2023 sycrop|moonpray](https://github.com/pray77/CVE-2023-3640)
+- example: [SCTF2023 sycrop|moonpray](https://github.com/pray77/CVE-2023-3640) by [@pray77](https://github.com/pray77)
 - bypass cea randomization \[in qemu\] [maybe just in CTF]:
   - [make cpu-entry-area great again](https://kqx.io/post/sp0/) - the trick raised by [@kqx](https://kqx.io/about/)
   - I know the trick in [wm_easyker && wm_easynetlink writeup](https://cnitlrt.github.io/wmctf2025/#wm_easyker) by [@cnitlrt](https://cnitlrt.github.io/about/)
