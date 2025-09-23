@@ -151,7 +151,7 @@ int main() {
 }
 ```
 
-## a area after kernel data [maybe just in CTF]
+## a area after kernel data [maybe just in CTF [or in qemu]]
 - condition: leak kbase
 - exploit: mmap\[or other ways\] to spray rop chain
 ```c
