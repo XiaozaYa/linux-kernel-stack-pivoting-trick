@@ -1,4 +1,4 @@
-# linux-kernel-stack-pivoting-trick
+# linux-kernel-stack-pivoting-trick [control kernel data in user mode]
 some tricks for linux kernel stack pivoting in CTF \[with smap|smep|kaslr\]
 
 ## direct mapping area [physmap]
