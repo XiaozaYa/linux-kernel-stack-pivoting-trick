@@ -217,11 +217,12 @@ int main(int argc, char** argv, char** envp)
 [382917.639821]   00e0 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
 ```
 - Root Case: Since I have not found the cause of this phenomenon, I consulted [@BitsByWill](https://github.com/BitsByWill) and he quickly gave me a root case analysis.I would like to express my sincerest thanks to [@BitsByWill](https://github.com/BitsByWill), but I have not verified it carefully yet, so I will not express it for the time being.
-  ```
+
+```c
 The region of memory in the kernel image is bounded by the symbols __start_bss_decrypted_unused and __end_bss_decrypted. During the kernel initialization procedure, their pages are freed back to the kernel (https://elixir.bootlin.com/linux/v6.16.8/source/arch/x86/mm/mem_encrypt_amd.c#L574) but not unmapped (which I guess is technically fine, since this region of memory is never referenced again from the kernel text/data/bss addresses). 
 
 Thus, when you do your large stack setup, you cause userland page faults, and the kernel will allocate pages to hold your data. These pages may come from the pages that used to back the memory for __start_bss_decrypted_unused to __end_bss_decrypted.
-  ```
+```
 
 ## &input_pool.hash.buf
 - condition: leak kbase
