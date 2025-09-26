@@ -234,6 +234,7 @@ int main(int argc, char** argv, char** envp)
 ```
   - result:
 ```bash
+$ sudo dmesg
 [382880.248520] [*] Leak Data:
 [382880.248527]   0000 0x6159617a6f616958 0xdead0072656e7750 0xdeadbeefbeefdead 0xdeadbeefbeefdead   XiaozaYaPwner.\xadޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
 [382880.248538]   0020 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
