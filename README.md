@@ -151,7 +151,7 @@ int main() {
 }
 ```
 
-## a area after kernel data [maybe just in CTF [or in qemu]]
+## a area after kernel data
 - condition: leak kbase
 - exploit: mmap\[or other ways\] to spray rop chain
 ```c
@@ -186,6 +186,42 @@ int main(int argc, char** argv, char** envp)
 }
 ```
 - example: [WMCTF2025 wm_easyker](https://blog.xmcve.com/2025/09/22/WMCTF2025-Writeup/#title-5) by [@Polaris](https://www.xmcve.com/)
+- I test it in my vmware ubuntu22.04, it's ok
+```bash
+[382880.248520] [*] Leak Data:
+[382880.248527]   0000 0x6159617a6f616958 0xdead0072656e7750 0xdeadbeefbeefdead 0xdeadbeefbeefdead   XiaozaYaPwner.\xadޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382880.248538]   0020 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382880.248548]   0040 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382880.248558]   0060 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382880.248588]   0080 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382880.248597]   00a0 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382880.248607]   00c0 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382880.248616]   00e0 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382900.479013] [*] Leak Data:
+[382900.479021]   0000 0x6159617a6f616958 0xdead0072656e7750 0xdeadbeefbeefdead 0xdeadbeefbeefdead   XiaozaYaPwner.\xadޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382900.479032]   0020 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382900.479059]   0040 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382900.479069]   0060 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382900.479078]   0080 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382900.479088]   00a0 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382900.479097]   00c0 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382900.479122]   00e0 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382917.639732] [*] Leak Data:
+[382917.639746]   0000 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382917.639759]   0020 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382917.639769]   0040 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382917.639780]   0060 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382917.639790]   0080 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382917.639800]   00a0 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382917.639811]   00c0 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[382917.639821]   00e0 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+```
+- Root Case: Since I have not found the cause of this phenomenon, I consulted [@BitsByWill](https://github.com/BitsByWill) and he quickly gave me a root case analysis.I would like to express my sincerest thanks to [@BitsByWill](https://github.com/BitsByWill), but I have not verified it carefully yet, so I will not express it for the time being.
+  ```
+The region of memory in the kernel image is bounded by the symbols __start_bss_decrypted_unused and __end_bss_decrypted. During the kernel initialization procedure, their pages are freed back to the kernel (https://elixir.bootlin.com/linux/v6.16.8/source/arch/x86/mm/mem_encrypt_amd.c#L574) but not unmapped (which I guess is technically fine, since this region of memory is never referenced again from the kernel text/data/bss addresses). 
+
+Thus, when you do your large stack setup, you cause userland page faults, and the kernel will allocate pages to hold your data. These pages may come from the pages that used to back the memory for __start_bss_decrypted_unused to __end_bss_decrypted.
+  ```
 
 ## &input_pool.hash.buf
 - condition: leak kbase
